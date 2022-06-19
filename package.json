@@ -1,0 +1,9 @@
+{
+  "name": "recipe-printer",
+  "version": "1.0.0",
+  "description": "Create printable recipe PDFs for Phomemo printers",
+  "main": "index.js",
+  "repository": "git@github.com:tamarasaurus/recipe-printer.git",
+  "author": "Tamara Robichet <tamara@heetch.com>",
+  "license": "MIT"
+}
