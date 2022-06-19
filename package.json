@@ -5,5 +5,9 @@
   "main": "index.js",
   "repository": "git@github.com:tamarasaurus/recipe-printer.git",
   "author": "Tamara Robichet <tamara@heetch.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@react-pdf/renderer": "^2.2.0",
+    "@types/node": "^18.0.0"
+  }
 }
