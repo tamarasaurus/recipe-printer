@@ -1,4 +1,4 @@
-import { renderToFile } from "@react-pdf/renderer";
+import { Font, renderToFile } from "@react-pdf/renderer";
 import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import Fuse from "fuse.js";
@@ -53,8 +53,8 @@ const formatIngredients = (rawIngredients: string): Ingredient[] => {
     .map((line: string) => extractIngredient(line));
 };
 
-const formatInstructions = (instructions: string): string[] => {
-  return [];
+const formatInstructions = (rawInstructions: string): string[] => {
+  return rawInstructions.split("\n").map((line) => line.trim());
 };
 
 const FormattedRecipe = (props: {
@@ -64,19 +64,16 @@ const FormattedRecipe = (props: {
   console.log(props.ingredients);
   return (
     <div>
-      {" "}
-      <h1>Formatted PDF</h1>
-      <h2>Ingredients</h2>
-      <ul>
-        {props.ingredients.map((ingredient) => (
-          <li key={ingredient.label}>
-            <Text>
-              {ingredient.icon} {ingredient.label}
-            </Text>
-            <br />
-          </li>
-        ))}
-      </ul>
+      <Text>Ingredients</Text>
+      {props.ingredients.map((ingredient) => (
+        <Text key={ingredient.label}>
+          {ingredient.icon} {ingredient.label}
+        </Text>
+      ))}
+      <Text>Instructions</Text>
+      {props.instructions.map((instruction) => (
+        <Text key={instruction}>{instruction}</Text>
+      ))}
     </div>
   );
 };
@@ -84,6 +81,11 @@ const FormattedRecipe = (props: {
 export const generatePDF = async (rawRecipe: RawRecipe) => {
   const ingredients = formatIngredients(rawRecipe.ingredients);
   const instructions = formatInstructions(rawRecipe.instructions);
+
+  Font.registerEmojiSource({
+    format: "png",
+    url: "https://twemoji.maxcdn.com/2/72x72/",
+  });
 
   return renderToFile(
     <Document>
